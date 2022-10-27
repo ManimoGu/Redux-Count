@@ -1,41 +1,26 @@
-
+import {useState} from "react"
 import './App.css';
-import { connect } from 'react-redux';
-import {increment, decrement, ADDNumber} from "./Redux/action/action"
+import {increment, decrement, ADDNumber} from "./Redux/Reducer/reducerCount"
+import {useDispatch, useSelector} from "react-redux"
 
 
 function App(props) {
+
+  const dispatch = useDispatch()
+
+  const count = useSelector((state) => state.Count.count)
+  
   return (
     <div className="App">
-      <button onClick={() => props.Plus()}>+</button>
-      <h3>{props.count}</h3>
-      <button onClick={() => props.Minus()}>-</button>
-      <button onClick={() => props.ADD(20)} >Add 10</button>
+      <button onClick={() => dispatch(increment())}>+</button>
+      <p>{count}</p>
+      <button onClick={() => dispatch(decrement())}>-</button>
+      <button onClick={() => dispatch(ADDNumber(10))}>ADD</button>
     </div>
   );
 }
 
-const mapStatetoProps =(state) =>{
 
-  return {
-    count : state.count
-  }
-}
+ 
 
-const mapDispatchtoProps = (dispatch) =>({
-
-  Plus : () =>{
-    dispatch(increment())
-  },
-  Minus : () =>{
-    dispatch(decrement())
-  },
-  ADD : (payload) =>{
-      dispatch(ADDNumber(payload))
-  }
-
-  
-})
-
-
-export default connect(mapStatetoProps, mapDispatchtoProps)(App);
+export default App;
